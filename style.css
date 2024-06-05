@@ -1,0 +1,71 @@
+/* CSS Reset*/
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+* {
+    margin: 0;
+    padding: 0;
+    font: inherit;
+}
+html, body {
+    height: 100%;
+}
+img, picture, video, canvas, svg, iframe, object {
+    display: block;
+    max-width: 100%;
+}
+p, h1, h2, h3, h4, h5, h6, li, dl, dt, blockquote {
+    overflow-wrap: break-word;
+}
+
+/* Actual Styles */
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0px;
+    font-size: 24px;
+}
+
+button {
+    border-radius: 10px;
+    width: 120px;
+    padding: 5px 0;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.entire-grid {
+    display: flex;
+    flex-wrap: wrap;
+    height: 400px;
+    width: 800px;
+    margin-top: 15px;
+}
+
+.single-cell {
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+}
+
+.end-of-row {
+    border-right: 1px solid black;
+}
+
+.bottom-row {
+    border-bottom: 1px solid black;
+}
+
+.hovered {
+    background-color: blueviolet;
+}
