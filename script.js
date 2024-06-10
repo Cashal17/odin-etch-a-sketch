@@ -1,5 +1,5 @@
 /**
- * Builds (gridSize x gridSize) table of square divs
+ * Builds (gridSize x gridSize) table of square divs.
  * @param {Number} gridSize side length of grid (in cells)
  * @returns true if grid was built successfully, false if gridSize was invalid
  */
@@ -12,7 +12,7 @@ function buildGrid(gridSize) {
     const gridContainerWidth = parseInt(compStyles.width, 10);
     
     // remove existing grid
-    const gridCellList = document.querySelectorAll(".single-cell");
+    const gridCellList = document.querySelectorAll(".cell-wrapper");
     gridCellList.forEach((elem) => {
         gridContainer.removeChild(elem);
     });
@@ -24,11 +24,12 @@ function buildGrid(gridSize) {
             newCell.classList.toggle("single-cell");
             newCell.style.height = (gridContainerHeight/gridSize) + "px";
             newCell.style.width = (gridContainerWidth/gridSize) + "px";
+            newCell.style.opacity = 1;
             if (j == gridSize-1)
                 newCell.classList.toggle("end-of-row");
             if (i == gridSize-1)
                 newCell.classList.toggle("bottom-row");
-            gridContainer.appendChild(newCell);
+            gridContainer.appendChild(addWrapperDiv(newCell));
         }
     }
 
@@ -36,10 +37,36 @@ function buildGrid(gridSize) {
     const cellList = document.querySelectorAll(".single-cell");
     cellList.forEach((elem) => {
         elem.addEventListener("mouseover", (ev) => {
-            ev.target.classList.add("hovered");
+            ev.target.style.backgroundColor = randomizeRGB();
+            ev.target.parentNode.style.backgroundColor = "black";
+            let currOpac = parseFloat(ev.target.style.opacity, 10);
+            if (currOpac >= 0.1)
+                currOpac -= 0.1;
+            ev.target.style.opacity = currOpac.toString();
         });
     });
     return true;
+}
+
+/**
+ * Adds wrapper div around each cell.
+ */
+function addWrapperDiv(elemToWrap) {
+    const wrapperDiv = document.createElement("div");
+    wrapperDiv.classList.add("cell-wrapper");
+    wrapperDiv.appendChild(elemToWrap);
+    return wrapperDiv;
+}
+
+/**
+ * Randomizes background color of cell upon hover.
+ * @returns string representing color in format "rgb(a b c)"
+ */
+function randomizeRGB() {
+    const redVal = Math.floor(Math.random() * 256);
+    const greenVal = Math.floor(Math.random() * 256);
+    const blueVal = Math.floor(Math.random() * 256);
+    return "rgb(" + redVal.toString() + " " + greenVal.toString() + " " + blueVal.toString() + ")";
 }
 
 /**
@@ -57,13 +84,15 @@ function installEventHandlers() {
     gridClearButton.addEventListener("click", () => {
         const gridCellList = document.querySelectorAll(".single-cell");
         gridCellList.forEach((elem) => {
-            elem.classList.remove("hovered");
+            elem.style.backgroundColor = "transparent";
+            elem.parentNode.style.backgroundColor = "transparent";
+            elem.style.opacity = 1;
         })
     });
 }
  
 function main() {
-   buildGrid(10);
+   buildGrid(16);
    installEventHandlers();
 }
 

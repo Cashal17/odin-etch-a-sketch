@@ -65,7 +65,3 @@ button {
 .bottom-row {
     border-bottom: 1px solid black;
 }
-
-.hovered {
-    background-color: blueviolet;
-}
